@@ -2,10 +2,11 @@ import logging
 import os
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, executor, types
-from db import Database
-from kb import menu_keyboard, about_keyboard, category_keyboard, dasturlash_keyboard, dizayn_keyboard, marketing_keyboard
+from database import Database, show_course_name
+from keyboard_buttun import (menu_keyboard, about_keyboard, category_keyboard,
+                             dasturlash_keyboard, dizayn_keyboard, marketing_keyboard)
 from inline_buttun import keyword
-from adddb import show_course_name
+
 load_dotenv()
 
 API_TOKEN = os.getenv("TG_TOKEN")
@@ -38,7 +39,7 @@ async def send_welcome(message: types.Message):
 async def show_user(message: types.Message):
     data = ""
 
-    if message.from_user.id in [1504360843, 2095041544]: #adminlarni chat_idlari
+    if message.from_user.id in [1504360843, 2095041544]:  # adminlarni chat_idlari
         user_name = Database.connect(f"""SELECT fname FROM users""", "select")
 
         for i in user_name:
@@ -48,7 +49,6 @@ async def show_user(message: types.Message):
         data += "Siz admin emassiz"
 
     await message.reply(data, reply_markup=menu_keyboard)
-
 
 
 @dp.message_handler(commands=['data'])
@@ -99,7 +99,7 @@ async def back_main(message: types.Message):
     await message.answer(message.text, reply_markup=menu_keyboard)
 
 
-@dp.message_handler(lambda message:message.text == "Yutuqlar")
+@dp.message_handler(lambda message: message.text == "Yutuqlar")
 async def award(message: types.Message):
     data = """
     📊 Shu kungacha kurslarni muvaffaqiyatli bitirganlar soni: 3000+
@@ -159,10 +159,38 @@ async def dizayn(message: types.Message):
 async def back_category(message: types.Message):
     await courses(message)
 
+
+message_course_name = ""
+
+
 @dp.message_handler(lambda message: message.text in show_course_name())
 async def show_about_course(message: types.Message):
+    global message_course_name
+    message_course_name = message.text
+    await message.answer("Tugmalarni birini tanlang", reply_markup=keyword)
 
-    await message.answer("tugmalarni birini tanlang", reply_markup=keyword)
+
+@dp.callback_query_handler(text=["Skill", "Graduation", "Price"])
+async def inline_answer(call: types.CallbackQuery):
+    message = "Bootcamp Graphis dizayn"
+    if call.data == "Skill":
+        data_skill = Database.connect(f"""SELECT skill FROM courses WHERE name = '{message_course_name}';""", "select")
+        await call.message.answer(f"""
+        Beriladigan bilimlar:
+        {data_skill[0][0]}""")
+
+    if call.data == "Graduation":
+        data_graduation = Database.connect(f"""SELECT graduation, weekly, dayly FROM courses WHERE name = '{message_course_name}';""", "select")
+        await call.message.answer(f"""
+        davomiyligi: {data_graduation[0][0]} oy
+        haftasiga: {data_graduation[0][1]} marta
+        kuniga: {data_graduation[0][2]} soat""")
+
+    if call.data == "Price":
+        data_price = Database.connect(f"""SELECT price FROM courses WHERE name = '{message_course_name}';""", "select")
+        await call.message.answer(f"Kurs narxi (oyiga) {data_price[0][0]}")
+
+    await call.answer()
 
 
 @dp.message_handler(lambda message: message.text == "Filliallarimiz")

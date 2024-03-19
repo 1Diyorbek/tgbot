@@ -1,5 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-from db import Database
+from database import Database
 
 
 def add_buttun(buttun, data):
