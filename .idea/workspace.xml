@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52080430-18ce-4ffa-a5e9-7cda6b31b18a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/inline_buttun.py" beforeDir="false" afterPath="$PROJECT_DIR$/inline_buttun.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="52080430-18ce-4ffa-a5e9-7cda6b31b18a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -153,7 +150,7 @@
       <workItem from="1710666239102" duration="566000" />
       <workItem from="1710687574500" duration="912000" />
       <workItem from="1710807824844" duration="18000" />
-      <workItem from="1710807861522" duration="3157000" />
+      <workItem from="1710807861522" duration="3626000" />
     </task>
     <servers />
   </component>

@@ -172,15 +172,17 @@ async def show_about_course(message: types.Message):
 
 @dp.callback_query_handler(text=["Skill", "Graduation", "Price"])
 async def inline_answer(call: types.CallbackQuery):
-    message = "Bootcamp Graphis dizayn"
+
     if call.data == "Skill":
         data_skill = Database.connect(f"""SELECT skill FROM courses WHERE name = '{message_course_name}';""", "select")
+
         await call.message.answer(f"""
         Beriladigan bilimlar:
         {data_skill[0][0]}""")
 
     if call.data == "Graduation":
         data_graduation = Database.connect(f"""SELECT graduation, weekly, dayly FROM courses WHERE name = '{message_course_name}';""", "select")
+
         await call.message.answer(f"""
         davomiyligi: {data_graduation[0][0]} oy
         haftasiga: {data_graduation[0][1]} marta
@@ -188,6 +190,7 @@ async def inline_answer(call: types.CallbackQuery):
 
     if call.data == "Price":
         data_price = Database.connect(f"""SELECT price FROM courses WHERE name = '{message_course_name}';""", "select")
+
         await call.message.answer(f"Kurs narxi (oyiga) {data_price[0][0]}")
 
     await call.answer()
@@ -211,6 +214,7 @@ async def show_fillial(message: types.Message):
         (https://maps.google.com/maps?q=40.388038,71.788190&ll=40.388038,71.788190&z=16)
 
     Telefon raqam: 78 888 9 888""")
+
     await message.answer(fillial_data)
 
 
@@ -220,6 +224,7 @@ async def show_aloqa(message: types.Message):
     Tizim vaqtinchalik ish faoliyatida emas.
     
     78 888 9 888 raqami orqali bog'lanishingizni so'raymiz!""")
+
     await message.answer(aloqa_data)
 
 
@@ -229,6 +234,7 @@ async def show_imtihon(message: types.Message):
     Dasturlash intensiv kursiga ro'yxatdan o'tishdan oldin ushbu havola orqali kurs haqida tanishib chiqishingizni so'raymiz.
 
     👉 https://telegra.ph/Dasturlash-kasbiy-talim-11-26""")
+
     await message.answer(imtihon_data)
 
 
